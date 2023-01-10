@@ -5,7 +5,7 @@ import MovieShower from './components/movieShower/MovieShower'
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <Routes>
         <Route path="/" element={ <MovieList /> }></Route>
         <Route path=":movieId" element={ <MovieShower /> }></Route>
