@@ -8,6 +8,7 @@ import './MovieShower.css'
 import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from "react-router-dom"
+import { useSearchParams } from "react-router-dom"
 import MovieListLoader from '../movieList/MovieListLoader';
 
 export default function MovieShower () {
@@ -15,6 +16,7 @@ export default function MovieShower () {
   const [movie, setMovie] = useState({})
   const { movieId } = useParams()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
 
 
   useEffect(() => {
@@ -22,7 +24,9 @@ export default function MovieShower () {
   }, [])
 
   const openMovieList = () => {
-    navigate(`/`)
+    const name = searchParams.get('name')
+    const page = searchParams.get('page')
+    navigate(`/?name=${name}&page=${page}`)
   }
 
   const getMovieById = async () => {

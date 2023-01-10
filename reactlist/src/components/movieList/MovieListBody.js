@@ -3,7 +3,7 @@ import Pagination from '@mui/material/Pagination';
 import MovieListCard from './MovieListCard'
 import './MovieList.css'
 
-export default function MovieListBody ({ movies, totalResults, page, changePage }) {
+export default function MovieListBody ({ movies, totalResults, page, changePage, searchName }) {
   const movieListItems = movies.map((movie) =>
     <Grid key={ movie.imdbID } item xs={ 12 } sm={ 12 } md={ 6 } lg={ 4 }>
       <MovieListCard
@@ -11,6 +11,8 @@ export default function MovieListBody ({ movies, totalResults, page, changePage 
         img={ movie.Poster }
         id={ movie.imdbID }
         title={ movie.Title }
+        page={ page }
+        searchName={ searchName }
         description={ movie.Year }
       />
     </Grid>

@@ -1,10 +1,11 @@
 import MovieEmptyList from './MovieEmptyList'
 import MovieListLoader from './MovieListLoader'
 import MovieListBody from './MovieListBody'
-import moviesApi from '../../api/movies.api';
+import moviesApi from '../../api/movies.api'
 import { useEffect, useState } from 'react'
+import { useSearchParams } from "react-router-dom"
 import Container from '@mui/material/Container'
-import MovieListActions from './MovieListActions';
+import MovieListActions from './MovieListActions'
 import './MovieList.css'
 
 
@@ -14,13 +15,21 @@ export default function MovieList() {
     const [totalResults, setTotalResults] = useState('')
     const [page, setPage] = useState(1)
     const [name, setName] = useState('')
+    const [searchParams, setSearchParams] = useSearchParams()
 
     useEffect (() => {
-      getMovieList()
+      getSearchParams()
     }, [])
+    
+    const getSearchParams = () => {
+      const name = searchParams.get("name")
+      const page = searchParams.get("page")
+      getMovieList(name, page)
+      setName(name)
+      setPage(+page)
+    }
 
     const getMovieList = async (name, page) => {
-      console.log('page')
       try {
         setBusy(true)
         const { movies, totalResults } = await moviesApi.getMoviesList(name, page)
@@ -35,10 +44,12 @@ export default function MovieList() {
     const searchMovie = async (name) => {
       setName(name)
       setPage(1)
+      setSearchParams({})
       await getMovieList(name)
     }
     const changePage = async (event, value) => {
       setPage(value)
+      setSearchParams({})
       await getMovieList(name, value)
     }
 
@@ -50,6 +61,7 @@ export default function MovieList() {
           movies={ movies }
           totalResults={ totalResults }
           page={ page }
+          searchName={ name }
           changePage={ changePage }
         />
       } else if (!busy && !movies) {

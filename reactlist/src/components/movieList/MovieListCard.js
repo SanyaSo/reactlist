@@ -5,11 +5,11 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea, CardActions, Button  } from '@mui/material';
 import { useNavigate } from "react-router-dom"
 
-export default function MovieListCard({ id ,img, title, description }) {
+export default function MovieListCard({ id ,img, title, description, searchName, page }) {
     const navigate = useNavigate()
 
     const openMovieShower = () => {
-      navigate(`/${id}`)
+      navigate(`/${id}?name=${searchName}&page=${page}`)
     }
 
     return (
